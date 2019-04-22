@@ -1,5 +1,8 @@
 const router = require('express-promise-router')();
+const model = require('./model');
 
-router.get('/users', (req, res) => res.send('Hello World!'))
+router.get('/', async (req, res) => {
+    res.status(200).json(await model.allusers())
+})
 
 module.exports = router;
