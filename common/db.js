@@ -1,7 +1,7 @@
 const MongoClient = require('mongodb').MongoClient;
 const assert = require('assert');
 
-const url = 'mongodb://localhost:27017/myproject';
+const url = 'mongodb://localhost:27017/parallel2';
 const dbName = 'parallel2';
 const client = new MongoClient(url, { useNewUrlParser: true });
 
@@ -12,4 +12,14 @@ const getDb = async () => {
     return client.db(dbName);
 };
 
-module.exports = { getDb };
+const getRoomCollection = async () => {
+    const db = await getDb();
+    return db.collection('Room');
+}
+
+const getUserCollection = async () => {
+    const db = await getDb();
+    return db.collection('User');
+}
+
+module.exports = { getDb, getRoomCollection, getUserCollection };

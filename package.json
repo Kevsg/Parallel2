@@ -10,8 +10,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.18.3",
     "express": "^4.16.4",
     "express-promise-router": "^3.0.3",
-    "mongodb": "^3.2.3"
+    "mongodb": "^3.2.3",
+    "morgan": "^1.9.1"
   }
 }
