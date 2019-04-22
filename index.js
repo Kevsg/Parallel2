@@ -2,16 +2,10 @@ const express = require('express')
 const app = express()
 const port = 3000
 
-app.get('/allrooms', (req, res) => res.send('Hello World!'))
-app.post('/allrooms', (req, res) => res.send('Hello World!'))
-app.put('/allrooms', (req, res) => res.send('Hello World!'))
-app.delete('/allrooms', (req, res) => res.send('Hello World!'))
+const { getDb } = require('./common/db');
 
-app.get('/room', (req, res) => res.send('Hello World!'))
-app.post('/rooms', (req, res) => res.send('Hello World!'))
-app.put('/room', (req, res) => res.send('Hello World!'))
-app.delete('/room', (req, res) => res.send('Hello World!'))
+app.use('/allrooms', require('./allrooms/router'));
+app.use('/room', require('./room/router'));
+app.use('/user', require('./users/router'));
 
-app.get('/users', (req, res) => res.send('Hello World!'))
-
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+app.listen(port, () => console.log(`Server listening on port ${port}!`))
