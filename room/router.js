@@ -1,26 +1,26 @@
-const router = require('express-promise-router')();
+const router = require("express-promise-router")();
 const {
     getRoomByRoomId,
     addUserToRoom,
     removeUserFromRoom
-} = require('./model');
+} = require("./model");
 
-router.get('/:roomId', async (req, res) => {
+router.get("/:roomId", async (req, res) => {
     const { roomId } = req.params;
     const room = await getRoomByRoomId(roomId);
     if (room) {
         res.json(room.users);
     } else {
-        res.status(404).json('Room does not exist');
+        res.status(404).json("Room does not exist");
     }
 });
 
-router.post('/:roomId', async (req, res) => {
+router.post("/:roomId", async (req, res) => {
     const { roomId } = req.params;
     const { user: username } = req.body;
     const room = await getRoomByRoomId(roomId);
     if (!room) {
-        res.status(404).json('Room does not exist');
+        res.status(404).json("Room does not exist");
         return;
     }
     if (room.users.find(u => username === u)) {
@@ -31,12 +31,12 @@ router.post('/:roomId', async (req, res) => {
     res.status(201).json({});
 });
 
-router.put('/:roomId', async (req, res) => {
+router.put("/:roomId", async (req, res) => {
     const { roomId } = req.params;
     const { user: username } = req.body;
     const room = await getRoomByRoomId(roomId);
     if (!room) {
-        res.status(404).json('Room does not exist');
+        res.status(404).json("Room does not exist");
         return;
     }
     if (room.users.find(u => username === u)) {
@@ -47,20 +47,20 @@ router.put('/:roomId', async (req, res) => {
     res.status(201).json({});
 });
 
-router.delete('/:roomId', async (req, res) => {
+router.delete("/:roomId", async (req, res) => {
     const { roomId } = req.params;
     const { user: username } = req.body;
     const room = await getRoomByRoomId(roomId);
     if (!room) {
-        res.status(404).send('Room does not exist');
+        res.status(404).send("Room does not exist");
         return;
     }
     if (!room.users.find(u => username === u)) {
-        res.status(404).json('User id is not found');
+        res.status(404).json("User id is not found");
         return;
     }
     await removeUserFromRoom(roomId, username);
-    res.json('USERS_ID leaves the room');
+    res.json("USERS_ID leaves the room");
 });
 
 module.exports = router;

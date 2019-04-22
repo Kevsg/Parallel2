@@ -2,9 +2,9 @@
   "name": "parallel2",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "node server.js",
     "watch": "nodemon",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.18.3",
+    "dotenv": "^7.0.0",
     "express": "^4.16.4",
     "express-promise-router": "^3.0.3",
     "mongodb": "^3.2.3",

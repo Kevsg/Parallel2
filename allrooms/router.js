@@ -1,11 +1,11 @@
-const router = require('express-promise-router')();
-const { addRoom, removeRoom, getAllRooms } = require('./model');
+const router = require("express-promise-router")();
+const { addRoom, removeRoom, getAllRooms } = require("./model");
 
-router.get('/', async (req, res) => {
+router.get("/", async (req, res) => {
     res.json(await getAllRooms());
 });
 
-router.post('/', async (req, res) => {
+router.post("/", async (req, res) => {
     const id = req.body.id;
     const valid = await addRoom(id);
     if (valid) {
@@ -15,7 +15,7 @@ router.post('/', async (req, res) => {
     }
 });
 
-router.put('/', async (req, res) => {
+router.put("/", async (req, res) => {
     const id = req.body.id;
     const valid = await addRoom(id);
     if (valid) {
@@ -25,7 +25,7 @@ router.put('/', async (req, res) => {
     }
 });
 
-router.delete('/',async (req, res) => {
+router.delete("/",async (req, res) => {
     const id = req.body.id;
     const valid = await removeRoom(id);
     if (valid) {

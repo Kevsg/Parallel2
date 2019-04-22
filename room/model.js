@@ -1,4 +1,4 @@
-const { getRoomCollection } = require('../common/db');
+const { getRoomCollection } = require("../common/db");
 
 const getRoomByRoomId = async (roomId) => {
     const roomCollection = await getRoomCollection();
