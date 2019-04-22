@@ -1,33 +1,33 @@
-const db = require('../common/db');
-async function allrooms(){
-    const room = await db.getRoomCollection();
-    return room.find({}).toArray();
-}
+const { getRoomCollection } = require('../common/db');
 
-async function addRoom(id){
-    const room = await db.getRoomCollection();
-    var query = await room.find({'id':id}).toArray();
-    if(query.length > 0){
+const getAllRooms = async () => {
+    const roomCollection = await getRoomCollection();
+    return roomCollection
+        .find({}, { fields: { _id: false, users: false } })
+        .toArray()
+        .then(rooms => rooms.map(room => room.id));
+};
+
+const addRoom = async (id) => {
+    const roomCollection = await getRoomCollection();
+    const rooms = await roomCollection.find({ id }, { fields: { users: false } }).toArray();
+    if (rooms.length > 0) {
         return false;
-    }
-    else{
-        await room.insertOne({'id':id});
+    } else {
+        await roomCollection.insertOne({ id, users: [] });
         return true;
     }
-}
+};
 
-async function removeRoom(id){
-    const room = await db.getRoomCollection();
-    var query = await room.find({'id':id}).toArray();
-    console.log(query);
-    console.log(query.length);
-    if(query.length > 0){
-        await room.findOneAndDelete({'id':id});
+const removeRoom = async (id) => {
+    const roomCollection = await getRoomCollection();
+    const rooms = await roomCollection.find({ id }, { fields: { users: false } }).toArray();
+    if(rooms.length > 0){
+        await roomCollection.findOneAndDelete({ id });
         return true;
-    }
-    else{
+    } else {
         return false;
     }
-}
+};
 
-module.exports = {allrooms,addRoom,removeRoom};
+module.exports = { getAllRooms, addRoom, removeRoom };

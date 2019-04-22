@@ -1,8 +1,9 @@
-const db = require('../common/db');
+const { getRoomCollection } = require('../common/db');
 
-async function allusers(){
-    const user = await db.getUserCollection();
-    return user.find({}).toArray();
-}
+const getAllUsers = async () => {
+    const roomCollection = await getRoomCollection();
+    const users = roomCollection.distinct('users', {});
+    return users;
+};
 
-module.exports = {allusers};
+module.exports = { getAllUsers };

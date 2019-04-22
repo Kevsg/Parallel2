@@ -1,9 +1,6 @@
 const router = require('express-promise-router')();
 const {
     getRoomByRoomId,
-    getRoomsByUsername,
-    upsertUser,
-    removeUser,
     addUserToRoom,
     removeUserFromRoom
 } = require('./model');
@@ -26,7 +23,6 @@ router.post('/:roomId', async (req, res) => {
         res.status(404).json('Room does not exist');
         return;
     }
-    await upsertUser(username);
     if (room.users.find(u => username === u)) {
         res.json({});
         return;
@@ -43,7 +39,6 @@ router.put('/:roomId', async (req, res) => {
         res.status(404).json('Room does not exist');
         return;
     }
-    await upsertUser(username);
     if (room.users.find(u => username === u)) {
         res.json({});
         return;
@@ -65,11 +60,6 @@ router.delete('/:roomId', async (req, res) => {
         return;
     }
     await removeUserFromRoom(roomId, username);
-    const remainRooms = await getRoomsByUsername(username);
-    console.log(JSON.stringify(remainRooms));
-    if (remainRooms.length <= 0) {
-        await removeUser(username);
-    }
     res.json('USERS_ID leaves the room');
 });
 

@@ -1,40 +1,38 @@
 const router = require('express-promise-router')();
-const model = require('./model');
+const { addRoom, removeRoom, getAllRooms } = require('./model');
 
 router.get('/', async (req, res) => {
-    res.status(200).json(await model.allrooms())
-})
+    res.json(await getAllRooms());
+});
+
 router.post('/', async (req, res) => {
-    var id = req.body.id;
-    var valid = await model.addRoom(id);
-    if(valid){
-        res.status(201).json({'id':id});
+    const id = req.body.id;
+    const valid = await addRoom(id);
+    if (valid) {
+        res.status(201).json({ id });
+    } else {
+        res.status(404).json(`${id} already exists`);
     }
-    else{
-        res.status(404).send('ROOM_ID already exists');
-    }
-})
+});
+
 router.put('/', async (req, res) => {
-    var id = req.body.id;
-    //console.log(id);
-    var valid = await model.addRoom(id);
-    if(valid){
-        res.status(201).json({'id':id});
+    const id = req.body.id;
+    const valid = await addRoom(id);
+    if (valid) {
+        res.status(201).json({ id });
+    } else {
+        res.json({ id });
     }
-    else{
-        res.status(200).json({'id':id});
-    }
-})
+});
+
 router.delete('/',async (req, res) => {
-    var id = req.body.id;
-    //console.log(id);
-    var valid = await model.removeRoom(id);
-    if(valid){
-        res.status(200).send("ROOM_ID Is deleted");
+    const id = req.body.id;
+    const valid = await removeRoom(id);
+    if (valid) {
+        res.json(`${id} Is deleted`);
+    } else {
+        res.status(404).json("Room id is not found");
     }
-    else{
-        res.status(404).send("Room id is not found");
-    }
-})
+});
 
 module.exports = router;
